@@ -1,3 +1,28 @@
+'''
+The MIT License (MIT)
+
+Copyright (c) 2014 John Solsma
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+'''
+
 import os, sys
 import bs4
 import requests
@@ -127,8 +152,7 @@ def browserLoop(soup):
 	global row
 	global col
 	global state
-	#global workbook
-	#global worksheet
+	
 	### Xlsx creation ###
 	workbook = xlsxwriter.Workbook(state+"_"+topic+"_"+'.xlsx') # create xlsx file with state-topic-date as name
 	fileName=state+"_"+topic+"_"'.xlsx'
@@ -226,19 +250,6 @@ def browserLoop(soup):
 					worksheet.write(row, col+9, recordNumberFound)
 					print("Record Number: "+recordNumberFound)
 					break
-			#section
-			#for item in mixedSoup2: # not working right
-			#	if "Section:" in item.get_text() and "Page:" in item.get_text() or "Section:" in item.get_text() and "Record Number:" in item.get_text():
-			#		if "Page:"  not in item.get_text():
-			#			startIndexNum = item.get_text().index("Section:")
-			#			endIndexNum =item.get_text().index("Record Number:")
-			#			sectionFound= item.get_text()[startIndexNum+15:endIndexNum]
-			#			print(sectionFound)
-			#		else:
-			#			startIndexNum = item.get_text().index("Section:")
-			#			endIndexNum =item.get_text().index("Page:")
-			#			sectionFound= item.get_text()[startIndexNum+9:endIndexNum]
-			#			print(sectionFound)
 			
 			############Article Publisher - Newspaper###############
 			for newspaper in mechSoup.findAll('span', attrs={'class': 'pubName'}):
@@ -261,12 +272,6 @@ def browserLoop(soup):
 						if day in item.get_text():
 							worksheet.write(row, col+5, day)
 							savedDay=day
-							#print(item.get_text())
-							#try:
-							#	if int(item.get_text().split()[-1]) in years:
-							#		worksheet.write(row, col+2, int(item.get_text().split()[-1]))
-							#		break
-							#except:
 							for year in years:
 								if str(year) in item.get_text():
 									#print(year)
@@ -301,25 +306,6 @@ def browserLoop(soup):
 				pass
 			
 			
-			#Article Section
-			#mixedSoup2=mechSoup.findAll('div', attrs={'class': 'sourceInfo'})
-			#mixedSoup3=mechSoup.findAll('span', attrs={'class': 'tagName'})
-			#for tagName in mixedSoup3:
-			#	print(tagName)
-			#	if tagName.get_text() == "Section: ":
-			#		print(tagName.next_sibling())
-			#for item in mixedSoup2:
-				#print(item)
-			#for sibling in mechSoup.next_siblings:
-			#	if sibling.get_text()=="Section: ":
-			#		print(sibling.next_sibling())
-			#for tag in mechSoup.find_all("br"):
-			#	print(tag.get_text())
-				
-				
-
-							#print(item.get_text())
-					#print(item.get_text()+"    Test")
 			worksheet.write(row, col, state)
 			worksheet.write(row, col+1, state)
 			print("\n")
